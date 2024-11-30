@@ -149,6 +149,7 @@ if (cloudMode && cloudUrl) {
 
 /** @type {import('next').NextConfig} */
 const config = {
+  assetPrefix: "/statistics",
   reactStrictMode: false,
   env: {
     basePath,
@@ -196,17 +197,25 @@ const config = {
     return headers;
   },
   async rewrites() {
-    return [
-      ...rewrites,
-      {
-        source: '/telemetry.js',
-        destination: '/api/scripts/telemetry',
-      },
-      {
-        source: '/teams/:teamId/:path((?!settings).*)*',
-        destination: '/:path*',
-      },
-    ];
+    return {  
+      beforeFiles: [
+        {
+          source: '/statistics/_next/:path+',
+          destination: '/_next/:path+',
+        },
+      ],
+      afterFiles: [
+        ...rewrites,
+        {
+          source: '/telemetry.js',
+          destination: '/api/scripts/telemetry',
+        },
+        {
+          source: '/teams/:teamId/:path((?!settings).*)*',
+          destination: '/:path*',
+        },
+      ]
+    };
   },
   async redirects() {
     return [...redirects];
