@@ -188,6 +188,13 @@ const config = {
         },
       },
     },
+    serverActions: {
+      allowedOrigins: [
+        'localhost:3000',
+        'afterclass.io',
+        '*.afterclass.io'
+      ],
+    },
   },
   webpack(config) {
     config.module.rules.push({
