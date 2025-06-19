@@ -212,6 +212,8 @@ export default {
         as: '*.js',
       },
     },
+  },
+  experimental: {
     serverActions: {
       allowedOrigins: [
         'localhost:3000',
